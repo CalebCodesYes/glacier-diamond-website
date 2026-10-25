@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glacier Diamond Records</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        glacier: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#022c22',
+                        },
+                        ice: {
+                            50: '#f4fbfd',
+                            100: '#e6f7fa',
+                            200: '#c6eef5',
+                            300: '#8ee0ef',
+                            400: '#4ecbe3',
+                            500: '#22afce',
+                            600: '#178cae',
+                            700: '#18708d',
+                            800: '#1a5c74',
+                            900: '#1a4d62',
+                            950: '#0c3243',
+                        },
+                        deep: '#030811'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030811;
+            color: #f4fbfd;
+            overflow-x: hidden;
+        }
+
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(12, 50, 67, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(142, 224, 239, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(15, 30, 48, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(142, 224, 239, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(22, 45, 70, 0.6);
+            border-color: rgba(142, 224, 239, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(78, 203, 227, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .glass-nav {
+            background: rgba(3, 8, 17, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(142, 224, 239, 0.15);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 15px rgba(142, 224, 239, 0.6);
+        }
+
+        .text-glow-lg {
+            text-shadow: 0 0 25px rgba(78, 203, 227, 0.8), 0 0 40px rgba(34, 175, 206, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030811;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #18708d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4ecbe3;
+        }
+
+        /* Hide Scrollbar for clean sliders */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-ice-400 selection:text-deep relative">
+
+    <!-- Background Atmospheric Glows -->
+    <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-ice-500/10 rounded-full filter blur-[120px] pointer-events-none animate-pulse-glow"></div>
+    <div class="fixed bottom-10 right-10 w-[600px] h-[600px] bg-glacier-500/10 rounded-full filter blur-[150px] pointer-events-none animate-pulse-glow" style="animation-delay: 2s;"></div>
+    <div class="fixed top-1/3 right-1/4 w-[300px] h-[300px] bg-cyan-500/10 rounded-full filter blur-[100px] pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" onclick="switchTab('home'); return false;" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-ice-300 via-ice-500 to-glacier-700 p-[1px] flex items-center justify-center shadow-lg shadow-ice-500/20 group-hover:shadow-ice-400/40 transition">
+                        <div class="w-full h-full bg-deep/90 rounded-[11px] flex items-center justify-center">
+                            <i data-lucide="gem" class="w-5 h-5 text-ice-300 group-hover:scale-110 transition duration-300"></i>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-orbitron font-bold text-lg tracking-wider text-white group-hover:text-ice-300 transition">GLACIER DIAMOND</span>
+                        <span class="text-[10px] tracking-[0.25em] text-ice-300/70 uppercase">RECORDS</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition text-ice-300 bg-ice-500/10 border border-ice-400/20">
+                        Home
+                    </button>
+                    <button onclick="switchTab('artists')" id="nav-artists" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">
+                        Roster
+                    </button>
+                    <button onclick="switchTab('releases')" id="nav-releases" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">
+                        Releases
+                    </button>
+                    <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">
+                        About & Contact
+                    </button>
+                </nav>
+
+                <!-- Quick Action Header Button -->
+                <div class="hidden md:flex items-center gap-3">
+                    <button onclick="switchTab('about'); scrollToDemos();" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-ice-400/30 text-ice-200 hover:bg-ice-400/10 hover:border-ice-400 transition flex items-center gap-2">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i> Submit Demo
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-ice-500/20 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-md text-base font-medium text-white hover:bg-ice-500/20">Home</button>
+            <button onclick="switchTab('artists'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-ice-500/20">Roster</button>
+            <button onclick="switchTab('releases'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-ice-500/20">Releases</button>
+            <button onclick="switchTab('about'); toggleMobileMenu();" class="block w-full text-left px-3 py-2.5 rounded-md text-base font-medium text-gray-300 hover:bg-ice-500/20">About & Contact</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINERS -->
+    <main class="flex-grow">
+
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <section id="tab-home" class="tab-content block">
+            <!-- Hero Section -->
+            <div class="relative min-h-[85vh] flex items-center justify-center px-4 overflow-hidden py-12">
+                <!-- Geometric Dynamic Lines -->
+                <div class="absolute inset-0 opacity-20 pointer-events-none">
+                    <div class="absolute top-10 left-10 w-72 h-72 border border-ice-300/30 rotate-45 rounded-3xl"></div>
+                    <div class="absolute bottom-10 right-10 w-96 h-96 border border-glacier-400/20 -rotate-12 rounded-3xl"></div>
+                </div>
+
+                <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel text-ice-300 text-xs font-semibold tracking-widest uppercase mb-2 animate-float">
+                        <i data-lucide="snowflake" class="w-4 h-4 text-ice-300"></i>
+                        <span>Pioneering Sound Architectures</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-orbitron font-extrabold tracking-tight text-white text-glow-lg leading-none">
+                        CRYSTALLINE SOUNDS,<br/>
+                        <span class="bg-gradient-to-r from-ice-200 via-ice-400 to-glacier-400 bg-clip-text text-transparent">BOUNDLESS VISIONS</span>
+                    </h1>
+
+                    <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 font-light leading-relaxed">
+                        Glacier Diamond is an independent record label crafting sonic landscapes at the intersection of ambient electronic, synthwave, experimental techno, and hyper-modern pop.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                        <button onclick="switchTab('releases')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-ice-500 to-glacier-600 text-white font-semibold text-sm tracking-wide shadow-lg shadow-ice-500/25 hover:shadow-ice-400/50 hover:scale-[1.02] transition duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="disc" class="w-4 h-4"></i> Explore Latest Releases
+                        </button>
+                        <button onclick="switchTab('artists')" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-white font-semibold text-sm tracking-wide hover:bg-white/10 border border-ice-300/20 transition duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4 text-ice-300"></i> Meet The Roster
+                        </button>
+                    </div>
+
+                    <!-- Label Stats Bar -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 max-w-4xl mx-auto">
+                        <div class="glass-panel p-4 rounded-2xl">
+                            <div class="font-orbitron text-2xl font-bold text-ice-300">8</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Key Artists</div>
+                        </div>
+                        <div class="glass-panel p-4 rounded-2xl">
+                            <div class="font-orbitron text-2xl font-bold text-ice-300">45+</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Catalog Tracks</div>
+                        </div>
+                        <div class="glass-panel p-4 rounded-2xl">
+                            <div class="font-orbitron text-2xl font-bold text-ice-300">12M+</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Global Streams</div>
+                        </div>
+                        <div class="glass-panel p-4 rounded-2xl">
+                            <div class="font-orbitron text-2xl font-bold text-ice-300">100%</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Independent</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Single Focus / Player Highlight Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="glass-panel rounded-3xl p-6 md:p-10 relative overflow-hidden">
+                    <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-ice-400/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="flex flex-col lg:flex-row items-center gap-8">
+                        <!-- Cover Art with Glow -->
+                        <div class="relative group w-64 h-64 sm:w-72 sm:h-72 flex-shrink-0">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-ice-400 to-glacier-500 rounded-2xl blur opacity-50 group-hover:opacity-80 transition duration-500"></div>
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Featured Album Art" class="relative rounded-2xl object-cover w-full h-full shadow-2xl">
+                            <button onclick="playTrack('Sub-Zero Serenade', 'Cryo Echo', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80')" class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-ice-400/90 hover:bg-ice-300 text-deep flex items-center justify-center shadow-xl transform scale-90 group-hover:scale-100 transition duration-300">
+                                <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- Track Details -->
+                        <div class="flex-grow text-center lg:text-left space-y-4">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-ice-500/20 text-ice-300 text-xs font-semibold uppercase tracking-wider border border-ice-400/30">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Featured Release
+                            </div>
+                            <h2 class="text-3xl sm:text-4xl font-orbitron font-bold text-white">Sub-Zero Serenade</h2>
+                            <p class="text-ice-300 text-lg font-medium">By <a href="#" onclick="openArtistProfile(0); return false;" class="hover:underline text-white">Cryo Echo</a></p>
+                            <p class="text-slate-300 text-sm max-w-2xl">
+                                An ethereal blend of chilled synthwave pads and crystalline vocal textures. The lead single off the upcoming concept album "Thermal Collapse".
+                            </p>
+                            
+                            <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+                                <button onclick="playTrack('Sub-Zero Serenade', 'Cryo Echo', 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80')" class="px-6 py-3 rounded-xl bg-ice-400 hover:bg-ice-300 text-deep font-semibold text-sm flex items-center gap-2 shadow-lg transition">
+                                    <i data-lucide="play-circle" class="w-5 h-5"></i> Stream Sample
+                                </button>
+                                <button onclick="switchTab('artists')" class="px-6 py-3 rounded-xl glass-panel text-white hover:bg-white/10 text-sm font-medium transition">
+                                    Artist Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News & Label Announcements Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-orbitron font-bold text-white">Latest Transmissions</h2>
+                        <p class="text-slate-400 text-sm mt-1">Updates, tour dates, and label news</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- News Item 1 -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold text-ice-400 uppercase tracking-widest">Oct 24, 2026</span>
+                            <h3 class="text-xl font-bold text-white hover:text-ice-300 transition cursor-pointer">Glacier Diamond Signs Glitch Artist 'Aura Frost'</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                We are thrilled to welcome London-based sound designer Aura Frost to our roster. Debut EP "Permafrost" arrives next month.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/5 mt-4">
+                            <a href="#" onclick="switchTab('artists'); return false;" class="text-xs font-semibold text-ice-300 hover:text-white flex items-center gap-1">Read More <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- News Item 2 -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold text-ice-400 uppercase tracking-widest">Oct 12, 2026</span>
+                            <h3 class="text-xl font-bold text-white hover:text-ice-300 transition cursor-pointer">Glacier Diamond Showcase in Berlin</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Join us at Kraftwerk Berlin for an immersive 8-hour audiovisual showcase featuring live sets from Apex Prism and Nocturnal Ice.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/5 mt-4">
+                            <a href="#" onclick="switchTab('about'); return false;" class="text-xs font-semibold text-ice-300 hover:text-white flex items-center gap-1">Event Details <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- News Item 3 -->
+                    <div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <span class="text-xs font-semibold text-ice-400 uppercase tracking-widest">Sep 28, 2026</span>
+                            <h3 class="text-xl font-bold text-white hover:text-ice-300 transition cursor-pointer">Limited Edition Vinyl Series Unveiled</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Hand-numbered, translucent blue heavy-weight vinyl repressings of our inaugural catalog are now available for pre-order.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-white/5 mt-4">
+                            <a href="#" onclick="switchTab('releases'); return false;" class="text-xs font-semibold text-ice-300 hover:text-white flex items-center gap-1">Pre-Order Vinyl <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: ARTISTS ROSTER & DETAILS ================= -->
+        <section id="tab-artists" class="tab-content hidden min-h-screen py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Roster Main Grid View (Hidden when single artist detail is opened) -->
+                <div id="roster-grid-view">
+                    <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-ice-300 text-xs font-semibold uppercase tracking-wider">
+                            <i data-lucide="mic" class="w-3.5 h-3.5"></i> Label Roster
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white">THE ARTISTS</h1>
+                        <p class="text-slate-300 text-sm sm:text-base">
+                            Discover the visionary producers, sound sculptors, and vocalists shaping the Glacier Diamond universe.
+                        </p>
+                    </div>
+
+                    <!-- 8 Artist Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="artist-cards-container">
+                        <!-- Injected dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Artist Detail View (Shown when an artist is clicked) -->
+                <div id="artist-detail-view" class="hidden space-y-10">
+                    <button onclick="closeArtistDetail()" class="px-4 py-2 rounded-xl glass-panel text-ice-300 hover:text-white flex items-center gap-2 text-sm transition">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Roster
+                    </button>
+
+                    <div id="artist-detail-content">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: CATALOG & RELEASES ================= -->
+        <section id="tab-releases" class="tab-content hidden min-h-screen py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-ice-300 text-xs font-semibold uppercase tracking-wider">
+                        <i data-lucide="radio" class="w-3.5 h-3.5"></i> Discography
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white">CATALOG & RELEASES</h1>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        Explore full releases, EPs, singles, and physical vinyl pressings.
+                    </p>
+                </div>
+
+                <!-- Filter Pills -->
+                <div class="flex justify-center gap-2 mb-8 flex-wrap">
+                    <button onclick="filterReleases('all')" class="release-filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel bg-ice-500/20 text-ice-300 border-ice-400/30">All Releases</button>
+                    <button onclick="filterReleases('album')" class="release-filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-slate-300 hover:text-white">Albums</button>
+                    <button onclick="filterReleases('ep')" class="release-filter-btn px-4 py-2 rounded-xl text-xs font-semibold glass-panel text-slate-300 hover:text-white">EPs & Singles</button>
+                </div>
+
+                <!-- Releases Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="releases-grid-container">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: ABOUT & CONTACT ================= -->
+        <section id="tab-about" class="tab-content hidden min-h-screen py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+                
+                <!-- About Glacier Diamond -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-ice-300 text-xs font-semibold uppercase tracking-wider">
+                            <i data-lucide="shield" class="w-3.5 h-3.5"></i> About The Label
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-orbitron font-extrabold text-white leading-tight">
+                            PRESERVING SONIC PURITY
+                        </h1>
+                        <p class="text-slate-300 text-base leading-relaxed">
+                            Founded in 2024, Glacier Diamond is an independent sound sanctuary dedicated to artists operating at the outer margins of modern music. We cultivate ambient, electro-acoustic, synthwave, and cutting-edge electronic subgenres with unyielding aesthetic rigor.
+                        </p>
+                        <p class="text-slate-300 text-base leading-relaxed">
+                            Every release in our catalog is engineered with meticulous spatial detail, designed for listeners seeking transformative auditory experiences.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="p-4 rounded-xl glass-card">
+                                <i data-lucide="globe" class="w-6 h-6 text-ice-300 mb-2"></i>
+                                <h4 class="text-white font-bold text-sm">Global Distribution</h4>
+                                <p class="text-xs text-slate-400 mt-1">Worldwide physical vinyl & lossless digital streaming networks.</p>
+                            </div>
+                            <div class="p-4 rounded-xl glass-card">
+                                <i data-lucide="sparkle" class="w-6 h-6 text-glacier-400 mb-2"></i>
+                                <h4 class="text-white font-bold text-sm">Artist First</h4>
+                                <p class="text-xs text-slate-400 mt-1">Fair revenue splits and creative independence for every roster member.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-ice-400 to-glacier-600 rounded-3xl blur-xl opacity-30"></div>
+                        <div class="relative rounded-3xl overflow-hidden glass-panel p-3 border border-ice-300/30">
+                            <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80" alt="Glacier Diamond Studio Setup" class="w-full h-[400px] object-cover rounded-2xl">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact & Demo Submissions Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8" id="demos-section">
+                    
+                    <!-- Contact Form (8 columns) -->
+                    <div class="lg:col-span-7 glass-panel rounded-3xl p-8 space-y-6">
+                        <div>
+                            <h2 class="text-2xl font-orbitron font-bold text-white">GET IN TOUCH</h2>
+                            <p class="text-slate-400 text-sm mt-1">Send general inquiries, booking requests, or demo submissions.</p>
+                        </div>
+
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-ice-300 mb-2">Your Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-deep/80 border border-ice-500/30 text-white focus:outline-none focus:border-ice-400 transition text-sm" placeholder="Alex Rivers">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-ice-300 mb-2">Email Address</label>
+                                    <input type="email" required class="w-full px-4 py-3 rounded-xl bg-deep/80 border border-ice-500/30 text-white focus:outline-none focus:border-ice-400 transition text-sm" placeholder="alex@domain.com">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-ice-300 mb-2">Inquiry Type</label>
+                                <select class="w-full px-4 py-3 rounded-xl bg-deep/80 border border-ice-500/30 text-white focus:outline-none focus:border-ice-400 transition text-sm">
+                                    <option value="demo">Demo Submission</option>
+                                    <option value="booking">Artist Booking Inquiry</option>
+                                    <option value="press">Press & Media Relations</option>
+                                    <option value="general">General Label Inquiry</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-ice-300 mb-2">Demo Link / Streaming URL (if applicable)</label>
+                                <input type="url" class="w-full px-4 py-3 rounded-xl bg-deep/80 border border-ice-500/30 text-white focus:outline-none focus:border-ice-400 transition text-sm" placeholder="https://soundcloud.com/your-private-link">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-ice-300 mb-2">Message</label>
+                                <textarea rows="4" required class="w-full px-4 py-3 rounded-xl bg-deep/80 border border-ice-500/30 text-white focus:outline-none focus:border-ice-400 transition text-sm" placeholder="Tell us about yourself or your project..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-ice-500 to-glacier-600 text-white font-semibold text-sm hover:shadow-lg hover:shadow-ice-500/30 transition duration-300 flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-4 h-4"></i> Transmit Message
+                            </button>
+                        </form>
+
+                        <div id="form-success" class="hidden p-4 rounded-xl bg-ice-500/20 border border-ice-400/40 text-ice-200 text-center text-sm font-medium">
+                            ✓ Message transmitted successfully! Our A&R team will review your message shortly.
+                        </div>
+                    </div>
+
+                    <!-- Guidelines Sidebar (5 columns) -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <!-- Guidelines Card -->
+                        <div class="glass-panel rounded-3xl p-6 space-y-4">
+                            <h3 class="text-lg font-orbitron font-bold text-white flex items-center gap-2">
+                                <i data-lucide="info" class="w-5 h-5 text-ice-300"></i> Demo Guidelines
+                            </h3>
+                            <ul class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-ice-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Send streaming links only (SoundCloud, Private Box, Drive). No email attachments.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-ice-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Include 2 to 4 unreleased finished or semi-finished tracks.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-ice-400 flex-shrink-0 mt-0.5"></i>
+                                    <span>Ensure your sound aligns with our atmospheric, electronic, ambient, or experimental roster.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Direct Contacts -->
+                        <div class="glass-panel rounded-3xl p-6 space-y-4">
+                            <h3 class="text-lg font-orbitron font-bold text-white">Direct Communications</h3>
+                            
+                            <div class="space-y-3 text-sm">
+                                <div class="flex items-center gap-3 text-slate-300">
+                                    <div class="w-8 h-8 rounded-lg bg-ice-500/20 flex items-center justify-center text-ice-300">
+                                        <i data-lucide="mail" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-400">A&R / Demos</div>
+                                        <span class="text-white font-medium">ar@glacierdiamond.com</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-slate-300">
+                                    <div class="w-8 h-8 rounded-lg bg-ice-500/20 flex items-center justify-center text-ice-300">
+                                        <i data-lucide="calendar" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-400">Press & Bookings</div>
+                                        <span class="text-white font-medium">booking@glacierdiamond.com</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 text-slate-300">
+                                    <div class="w-8 h-8 rounded-lg bg-ice-500/20 flex items-center justify-center text-ice-300">
+                                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-slate-400">Headquarters</div>
+                                        <span class="text-white font-medium">Reykjavík / London</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PERSISTENT AUDIO PLAYER BAR -->
+    <div id="audio-player-bar" class="fixed bottom-0 left-0 right-0 z-50 glass-nav border-t border-ice-500/30 px-4 py-3 transition-transform duration-300 transform translate-y-0">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            
+            <!-- Track Info -->
+            <div class="flex items-center gap-3 w-1/3">
+                <img id="player-thumb" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80" alt="Current Track" class="w-12 h-12 rounded-lg object-cover border border-ice-400/20">
+                <div class="overflow-hidden">
+                    <div id="player-title" class="text-sm font-semibold text-white truncate">Sub-Zero Serenade</div>
+                    <div id="player-artist" class="text-xs text-ice-300 truncate">Cryo Echo</div>
+                </div>
+            </div>
+
+            <!-- Controls & Progress -->
+            <div class="flex flex-col items-center w-1/3 max-w-md">
+                <div class="flex items-center gap-4 mb-1">
+                    <button class="text-slate-400 hover:text-white transition"><i data-lucide="skip-back" class="w-4 h-4"></i></button>
+                    <button id="play-pause-btn" onclick="togglePlayPause()" class="w-10 h-10 rounded-full bg-ice-400 hover:bg-ice-300 text-deep flex items-center justify-center transition shadow-lg">
+                        <i data-lucide="play" id="play-icon" class="w-5 h-5 fill-current ml-0.5"></i>
+                        <i data-lucide="pause" id="pause-icon" class="w-5 h-5 fill-current hidden"></i>
+                    </button>
+                    <button class="text-slate-400 hover:text-white transition"><i data-lucide="skip-forward" class="w-4 h-4"></i></button>
+                </div>
+                <!-- Simulated Progress Bar -->
+                <div class="w-full flex items-center gap-2">
+                    <span id="curr-time" class="text-[10px] text-slate-400 font-mono">0:42</span>
+                    <div class="flex-grow bg-white/10 h-1 rounded-full overflow-hidden cursor-pointer" onclick="seekAudio(event)">
+                        <div id="player-progress" class="bg-gradient-to-r from-ice-300 to-glacier-400 h-full w-[35%] transition-all duration-300"></div>
+                    </div>
+                    <span id="dur-time" class="text-[10px] text-slate-400 font-mono">3:20</span>
+                </div>
+            </div>
+
+            <!-- Additional Controls -->
+            <div class="flex items-center justify-end gap-3 w-1/3 text-slate-400">
+                <i data-lucide="volume-2" class="w-4 h-4 hover:text-white cursor-pointer hidden sm:block"></i>
+                <div class="w-16 bg-white/10 h-1 rounded-full overflow-hidden hidden sm:block">
+                    <div class="bg-ice-300 h-full w-[70%]"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-ice-500/20 py-12 px-4 sm:px-6 lg:px-8 mt-20 mb-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <i data-lucide="gem" class="w-6 h-6 text-ice-300"></i>
+                <span class="font-orbitron font-bold text-white tracking-wider">GLACIER DIAMOND RECORDS</span>
+            </div>
+            
+            <div class="text-xs text-slate-400 text-center">
+                © 2026 Glacier Diamond Ltd. All rights reserved. Designed for immersive auditory exploration.
+            </div>
+
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="#" class="hover:text-ice-300 transition"><i class="fa-brands fa-spotify text-lg"></i></a>
+                <a href="#" class="hover:text-ice-300 transition"><i class="fa-brands fa-soundcloud text-lg"></i></a>
+                <a href="#" class="hover:text-ice-300 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-ice-300 transition"><i class="fa-brands fa-x-twitter text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // ARTISTS DATA (8 Distinct Profiles)
+        const artists = [
+            {
+                id: 0,
+                name: "Cryo Echo",
+                genre: "Ambient Synthwave / Chillwave",
+                origin: "Oslo, Norway",
+                image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+                bio: "Cryo Echo creates icy, wide-open synth landscapes that evoke polar night skies and glacial movements. Utilizing vintage analog synthesizers mixed with modern digital shimmer.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Sub-Zero Serenade", type: "Single", year: "2026", cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" },
+                    { title: "Thermal Collapse", type: "Album", year: "2025", cover: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Sub-Zero Serenade"
+            },
+            {
+                id: 1,
+                name: "Aura Frost",
+                genre: "Experimental Micro-Glitch / IDM",
+                origin: "London, UK",
+                image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80",
+                bio: "Aura Frost deconstructs organic orchestral recordings into crystalline micro-textures, creating glitchy, highly emotional soundscapes with intricate rhythmic architecture.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Permafrost", type: "EP", year: "2026", cover: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Glass Fractures"
+            },
+            {
+                id: 2,
+                name: "Apex Prism",
+                genre: "Hypnotic Minimal Techno",
+                origin: "Berlin, Germany",
+                image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80",
+                bio: "Apex Prism delivers relentless, deep-sub techno driving under crystalline high-end percussion. Renowned for hypnotic 4-hour live hardware performances.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Refraction Index", type: "Album", year: "2026", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" },
+                    { title: "Prismatic Pressure", type: "Single", year: "2025", cover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Refraction Index"
+            },
+            {
+                id: 3,
+                name: "Nocturnal Ice",
+                genre: "Dark Wave / Synth Pop",
+                origin: "Reykjavík, Iceland",
+                image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+                bio: "Pairing haunting vocal harmonies with heavy cold-wave basslines, Nocturnal Ice captures the solemn beauty of unending winter nights.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Aurora Dusk", type: "Album", year: "2025", cover: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Frozen Horizon"
+            },
+            {
+                id: 4,
+                name: "Borealis Drift",
+                genre: "Drone & Ambient Environmental",
+                origin: "Vancouver, Canada",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+                bio: "Specializing in long-form drone compositions utilizing tape loops and field recordings from northern polar expeditions.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Magnetic North", type: "Album", year: "2024", cover: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Magnetic North Part I"
+            },
+            {
+                id: 5,
+                name: "Vortex Synth",
+                genre: "Cyberpunk / Darksynth",
+                origin: "Tokyo, Japan",
+                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+                bio: "Aggressive neon-infused bass synthesis combined with cinematic sci-fi textures. Fast-paced, high energy electronics for futuristic landscapes.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Neon Tundra", type: "EP", year: "2026", cover: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Neon Tundra"
+            },
+            {
+                id: 6,
+                name: "Isotope 9",
+                genre: "Deconstructed Club / Bass",
+                origin: "Paris, France",
+                image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
+                bio: "Heavy metallic percussion, shattered rhythms, and sub-bass frequencies crafted for sound-system culture.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Fission Point", type: "Single", year: "2026", cover: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "Fission Point"
+            },
+            {
+                id: 7,
+                name: "Solstice Echo",
+                genre: "Neoclassical Ambient",
+                origin: "Stockholm, Sweden",
+                image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
+                bio: "Combining delicate upright piano, string quartets, and subtle icy electronic processing.",
+                socials: { spotify: "#", instagram: "#", soundcloud: "#" },
+                discography: [
+                    { title: "Winter Solstice Piano", type: "Album", year: "2025", cover: "https://images.unsplash.com/photo-1499417265103-35fb88271177?auto=format&fit=crop&w=400&q=80" }
+                ],
+                sampleTrack: "First Snowfall"
+            }
+        ];
+
+        // ALL RELEASES COMBINED DATA
+        const releases = [
+            { title: "Sub-Zero Serenade", artist: "Cryo Echo", type: "ep", year: "2026", cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" },
+            { title: "Refraction Index", artist: "Apex Prism", type: "album", year: "2026", cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80" },
+            { title: "Permafrost", artist: "Aura Frost", type: "ep", year: "2026", cover: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80" },
+            { title: "Neon Tundra", artist: "Vortex Synth", type: "ep", year: "2026", cover: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=400&q=80" },
+            { title: "Aurora Dusk", artist: "Nocturnal Ice", type: "album", year: "2025", cover: "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=400&q=80" },
+            { title: "Winter Solstice Piano", artist: "Solstice Echo", type: "album", year: "2025", cover: "https://images.unsplash.com/photo-1499417265103-35fb88271177?auto=format&fit=crop&w=400&q=80" }
+        ];
+
+        let isPlaying = false;
+
+        // Initialize Lucide Icons & Roster Cards on load
+        window.onload = function() {
+            lucide.createIcons();
+            renderRosterGrid();
+            renderReleasesGrid(releases);
+        };
+
+        // Navigation Switching Function
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.add('hidden'));
+
+            // Show selected tab content
+            const selectedTab = document.getElementById(`tab-${tabId}`);
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+
+            // Update nav button styles
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-ice-300', 'bg-ice-500/10', 'border', 'border-ice-400/20');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-ice-300', 'bg-ice-500/10', 'border', 'border-ice-400/20');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            // Reset artist roster view if switching to artists
+            if (tabId === 'artists') {
+                closeArtistDetail();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Navigation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Render Roster Grid
+        function renderRosterGrid() {
+            const container = document.getElementById('artist-cards-container');
+            container.innerHTML = artists.map((artist) => `
+                <div onclick="openArtistProfile(${artist.id})" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${artist.image}" alt="${artist.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4">
+                            <span class="text-[10px] font-semibold text-ice-300 uppercase tracking-wider">${artist.origin}</span>
+                            <h3 class="text-xl font-bold font-orbitron text-white group-hover:text-ice-300 transition">${artist.name}</h3>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-xs text-slate-300 line-clamp-2">${artist.genre}</p>
+                        <div class="mt-4 flex items-center justify-between text-xs font-semibold text-ice-400">
+                            <span>View Profile</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Open Specific Artist Profile Detail View
+        function openArtistProfile(artistId) {
+            const artist = artists.find(a => a.id === artistId);
+            if (!artist) return;
+
+            const gridView = document.getElementById('roster-grid-view');
+            const detailView = document.getElementById('artist-detail-view');
+            const detailContent = document.getElementById('artist-detail-content');
+
+            detailContent.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 sm:p-10">
+                    <div class="flex flex-col lg:flex-row gap-8 items-center lg:items-start">
+                        <img src="${artist.image}" alt="${artist.name}" class="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl object-cover border border-ice-400/30 shadow-2xl flex-shrink-0">
+                        
+                        <div class="space-y-4 text-center lg:text-left flex-grow">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-ice-500/20 text-ice-300 text-xs font-semibold uppercase tracking-wider">
+                                ${artist.origin}
+                            </div>
+                            <h1 class="text-4xl sm:text-5xl font-orbitron font-extrabold text-white">${artist.name}</h1>
+                            <p class="text-ice-300 font-medium">${artist.genre}</p>
+                            <p class="text-slate-300 text-sm leading-relaxed max-w-2xl">${artist.bio}</p>
+
+                            <!-- Sample Player Button -->
+                            <div class="pt-2">
+                                <button onclick="playTrack('${artist.sampleTrack}', '${artist.name}', '${artist.image}')" class="px-6 py-3 rounded-xl bg-ice-400 hover:bg-ice-300 text-deep font-semibold text-sm flex items-center gap-2 shadow-lg transition mx-auto lg:mx-0">
+                                    <i data-lucide="play" class="w-4 h-4 fill-current"></i> Play Featured Track (${artist.sampleTrack})
+                                </button>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div class="pt-4 flex items-center justify-center lg:justify-start gap-4 text-slate-400">
+                                <a href="${artist.socials.spotify}" class="hover:text-ice-300 text-lg transition"><i class="fa-brands fa-spotify"></i></a>
+                                <a href="${artist.socials.soundcloud}" class="hover:text-ice-300 text-lg transition"><i class="fa-brands fa-soundcloud"></i></a>
+                                <a href="${artist.socials.instagram}" class="hover:text-ice-300 text-lg transition"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discography Subsection -->
+                    <div class="mt-12 pt-8 border-t border-white/10">
+                        <h3 class="text-2xl font-orbitron font-bold text-white mb-6">Discography</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            ${artist.discography.map(item => `
+                                <div class="glass-card p-4 rounded-xl flex items-center gap-4">
+                                    <img src="${item.cover}" alt="${item.title}" class="w-16 h-16 rounded-lg object-cover">
+                                    <div>
+                                        <h4 class="text-white font-bold text-sm">${item.title}</h4>
+                                        <p class="text-xs text-slate-400">${item.type} • ${item.year}</p>
+                                        <button onclick="playTrack('${item.title}', '${artist.name}', '${item.cover}')" class="mt-2 text-xs font-semibold text-ice-300 hover:underline flex items-center gap-1">
+                                            Listen <i data-lucide="play-circle" class="w-3 h-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            gridView.classList.add('hidden');
+            detailView.classList.remove('hidden');
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeArtistDetail() {
+            document.getElementById('roster-grid-view').classList.remove('hidden');
+            document.getElementById('artist-detail-view').classList.add('hidden');
+        }
+
+        // Render Releases Grid
+        function renderReleasesGrid(items) {
+            const container = document.getElementById('releases-grid-container');
+            container.innerHTML = items.map(release => `
+                <div class="glass-card rounded-2xl p-4 flex gap-4 items-center group">
+                    <img src="${release.cover}" alt="${release.title}" class="w-24 h-24 rounded-xl object-cover shadow-md flex-shrink-0">
+                    <div class="flex-grow">
+                        <span class="text-[10px] font-semibold text-ice-400 uppercase tracking-widest">${release.type} • ${release.year}</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-ice-300 transition">${release.title}</h3>
+                        <p class="text-xs text-slate-300">${release.artist}</p>
+                        <button onclick="playTrack('${release.title}', '${release.artist}', '${release.cover}')" class="mt-3 px-3 py-1.5 rounded-lg bg-ice-500/20 text-ice-300 border border-ice-400/30 text-xs font-semibold hover:bg-ice-400 hover:text-deep transition flex items-center gap-1">
+                            <i data-lucide="play" class="w-3 h-3 fill-current"></i> Stream
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Filter Releases Function
+        function filterReleases(type) {
+            const btns = document.querySelectorAll('.release-filter-btn');
+            btns.forEach(btn => btn.classList.remove('bg-ice-500/20', 'text-ice-300', 'border-ice-400/30'));
+            
+            if (type === 'all') {
+                renderReleasesGrid(releases);
+            } else {
+                const filtered = releases.filter(r => r.type === type);
+                renderReleasesGrid(filtered);
+            }
+        }
+
+        // Simulated Audio Player Functions
+        function playTrack(title, artist, thumb) {
+            document.getElementById('player-title').innerText = title;
+            document.getElementById('player-artist').innerText = artist;
+            document.getElementById('player-thumb').src = thumb;
+
+            isPlaying = true;
+            updatePlayerUI();
+        }
+
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            updatePlayerUI();
+        }
+
+        function updatePlayerUI() {
+            const playIcon = document.getElementById('play-icon');
+            const pauseIcon = document.getElementById('pause-icon');
+
+            if (isPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            }
+        }
+
+        function seekAudio(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickPosition = (e.clientX - rect.left) / rect.width;
+            document.getElementById('player-progress').style.width = `${clickPosition * 100}%`;
+        }
+
+        function scrollToDemos() {
+            const elem = document.getElementById('demos-section');
+            if (elem) elem.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form Submit Simulation
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').reset();
+            const successBox = document.getElementById('form-success');
+            successBox.classList.remove('hidden');
+            setTimeout(() => {
+                successBox.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
